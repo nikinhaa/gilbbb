@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>corrida</title>
+
+    <script>
+        var x = new Array(10);
+        var y = new Array(10);
+        var z = new Array(10);
+        var w = new Array(10);
+        var v, u, t, s;
+        var q = new Array(4);
+        var p = new Array(10);
+        var o = new Array(10);
+        var n = new Array(10);
+
+        function A() {
+            for(var i = 0; i < 10; ++i) {
+                x[i] = (window.prompt("Informe o nome do " + (i + 1) + "º piloto.", String.fromCharCode(97 + i)));
+                do {
+                    y[i] = parseInt(window.prompt("Informe o número do " + (i + 1) + "º piloto.", i + 1));
+                } while(isNaN(y[i]));
+            }
+            B();
+        }
+
+        function B() {
+            for(var i = 0; i < 10; ++i) {
+                z[i] = new Array(3);
+                w[i] = 0;
+            }
+
+            for(var i = 0; i < 10; ++i) {
+                for(var j = 0; j < 3; ++j) {
+                    z[i][j] = Math.floor(Math.random() * 240 + 60);
+                    w[i] += z[i][j];
+                }
+                w[i] /= 3;
+            }
+
+            v = w[0];
+            u = z[0][0];
+            t = z[0][0];
+
+            for(var i = 0; i < 10; ++i) {
+                for(var j = 0; j < 3; ++j) {
+                    if(u > z[i][j]) {
+                        u = z[i][j];
+                        q[2] = i;
+                    }
+
+                    if(t < z[i][j]) {
+                        t = z[i][j];
+                        q[3] = i;
+                    }
+                }
+            }
+
+            s = 0;
+
+            for(var i = 0; i < 10; ++i) {
+                if(v > w[i]) {
+                    v = w[i];
+                    q[0] = i;
+                }
+
+                if(s < w[i]) {
+                    s = w[i];
+                    q[1] = y[i];
+                }
+            }
+
+            var tempW = w.slice();
+            var tempX = x.slice();
+            var tempY = y.slice();
+
+            for(var i = 0; i < 10; ++i) {
+                for(var j = 0; j < 10; ++j) {
+                    if(tempW[i] < tempW[j]) {
+                        var tempWVal = tempW[i];
+                        tempW[i] = tempW[j];
+                        tempW[j] = tempWVal;
+
+                        var tempXVal = tempX[i];
+                        tempX[i] = tempX[j];
+                        tempX[j] = tempXVal;
+
+                        var tempYVal = tempY[i];
+                        tempY[i] = tempY[j];
+                        tempY[j] = tempYVal;
+                    }
+                }
+            }
+
+            for(var i = 0; i < 10; ++i) {
+                document.write("<img src='img/carro.png'>");
+                document.write("Nome do piloto: " + tempX[i] + " | Número do carro: " + tempY[i] + "<br>");
+            }
+
+            function C(k) {
+                var j = Math.floor(k / 60);
+                var i = k % 60;
+                return j + " minutos e " + i + " segundos";
+            }
+
+            document.write("Nome do piloto que estará na Pole-position: " + x[q[0]] + " | Tempo médio: " + C(w[q[0]]) + "<br>");
+            document.write("Número do carro que vai largar em último: " + q[1] + "<br>");
+            document.write("Nome do piloto com a volta mais rápida: " + x[q[2]] + " | Tempo da volta: " + C(u) + "<br>");
+            document.write("Número do carro que fez a volta mais lenta: " + y[q[3]] + " | Tempo da volta " + C(t) + "<br>");
+        }
+    </script>
+</head>
+
+<body>
+    <script>
+        A();
+    </script>
+</body>
+</html>
